@@ -1,0 +1,85 @@
+﻿@page "/counter"
+
+<PageTitle>MapeamentoCompetencias</PageTitle>
+
+<MudAppBar>
+    <MudText Typo="Typo.h6">MudBlazor App</MudText>
+</MudAppBar>
+
+<MudContainer Class="mt-8">
+    <MudTabs>
+        @foreach (var tipo in tipos)
+        {
+            <MudTabPanel Text="@tipo.Nome">
+                @foreach (var competencia in tipo.Competencias)
+                {
+                    <MudCard Style="margin-bottom: 8px; width: 100%;">
+                        <MudCardContent>
+                            <MudText>@competencia.Nome</MudText>
+                            <MudDivider />
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                if (i < competencia.Avaliacao)
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.Star" Title="FilledStar" style="color: #FFEB3B" />
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.StarBorder" Title="FilledStarBorder" />
+                                }
+                            }
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Variant="Variant.Text" Color="Color.Primary">Alterar avaliação</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                }
+            </MudTabPanel>
+        }
+    </MudTabs>
+</MudContainer>
+
+@code {
+    public class Tipo
+    {
+        public string Nome { get; set; }
+        public List<Competencia> Competencias { get; set; }
+    }
+
+    public class Competencia
+    {
+        public string Nome { get; set; }
+        public int Avaliacao { get; set; }
+    }
+
+    private List<Tipo> tipos = new List<Tipo>
+    {
+        new Tipo
+        {
+            Nome = "Tipo 1",
+            Competencias = new List<Competencia>
+            {
+                new Competencia { Nome = "Competência 1.1", Avaliacao = 3 },
+                new Competencia { Nome = "Competência 1.2", Avaliacao = 4 }
+            }
+        },
+        new Tipo
+        {
+            Nome = "Tipo 2",
+            Competencias = new List<Competencia>
+            {
+                new Competencia { Nome = "Competência 2.1", Avaliacao = 5 },
+                new Competencia { Nome = "Competência 2.2", Avaliacao = 2 }
+            }
+        },
+        new Tipo
+        {
+            Nome = "Tipo 3",
+            Competencias = new List<Competencia>
+            {
+                new Competencia { Nome = "Competência 3.1", Avaliacao = 1 },
+                new Competencia { Nome = "Competência 3.2", Avaliacao = 3 }
+            }
+        }
+    };
+}
